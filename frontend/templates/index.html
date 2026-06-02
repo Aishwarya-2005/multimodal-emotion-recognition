@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal Emotion Recognition Interface</title>
+    <!-- Google Fonts for futuristic cyberpunk aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Ambient glowing background decorators -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <header class="main-header">
+            <h1 class="glitch-title" data-text="MULTIMODAL EMOTION RECOGNITION">MULTIMODAL EMOTION RECOGNITION</h1>
+            <p class="subtitle">Neural Fusion Interface v1.0.4</p>
+        </header>
+
+        <div class="dashboard-grid">
+            
+            <!-- Card 1: File Analysis Upload -->
+            <section class="cyber-card" id="upload-panel">
+                <div class="card-header">
+                    <h2><span class="terminal-symbol">&gt;_</span> FILE ANALYSIS</h2>
+                    <span class="status-indicator">ONLINE</span>
+                </div>
+                
+                <form id="fileUploadForm" enctype="multipart/form-data" novalidate>
+                    <div class="form-group">
+                        <label for="faceInput" class="custom-file-label">
+                            <span class="file-title">Facial Target (Image)</span>
+                            <div class="drop-zone" id="faceDropZone">
+                                <span class="drop-icon">👤</span>
+                                <span class="drop-text">Drag & drop or click to select image</span>
+                                <input type="file" id="faceInput" name="image" accept="image/*" required>
+                            </div>
+                        </label>
+                        <div class="file-preview" id="facePreview">
+                            <span class="file-name" id="faceFileName">No file chosen</span>
+                            <button type="button" class="clear-file" id="clearFace" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audioInput" class="custom-file-label">
+                            <span class="file-title">Acoustic Signal (Audio)</span>
+                            <div class="drop-zone" id="audioDropZone">
+                                <span class="drop-icon">🎙️</span>
+                                <span class="drop-text">Drag & drop or click to select audio</span>
+                                <input type="file" id="audioInput" name="audio" accept="audio/*" required>
+                            </div>
+                        </label>
+                        <div class="file-preview" id="audioPreview">
+                            <span class="file-name" id="audioFileName">No file chosen</span>
+                            <button type="button" class="clear-file" id="clearAudio" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="cyber-btn" id="filePredictBtn">
+                        <span class="btn-text">RUN NEURAL PREDICTION</span>
+                        <span class="btn-edge"></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Card 2: Live Telemetry Capture -->
+            <section class="cyber-card" id="telemetry-panel">
+                <div class="card-header">
+                    <h2><span class="terminal-symbol">&gt;_</span> LIVE TELEMETRY</h2>
+                    <span class="status-indicator live-pulse" id="telemetryStatusBadge">OFFLINE</span>
+                </div>
+                
+                <div id="live-container">
+                    <div class="video-feed-wrapper">
+                        <video id="video" autoplay playsinline muted></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+                        <div class="scanner-line" id="scannerLine" style="display:none;"></div>
+                        <div class="video-overlay-elements">
+                            <div class="corner-bracket top-left"></div>
+                            <div class="corner-bracket top-right"></div>
+                            <div class="corner-bracket bottom-left"></div>
+                            <div class="corner-bracket bottom-right"></div>
+                            <div class="rec-dot" id="recDot" style="display:none;"></div>
+                        </div>
+                    </div>
+
+                    <div class="controls-grid">
+                        <button id="startCamera" type="button" class="cyber-btn secondary">
+                            <span class="btn-text">INITIALIZE SENSORS</span>
+                            <span class="btn-edge"></span>
+                        </button>
+                        <button id="capture" type="button" class="cyber-btn" disabled>
+                            <span class="btn-text">RECORD DATASTREAM</span>
+                            <span class="btn-edge"></span>
+                        </button>
+                    </div>
+
+                    <p id="status" class="telemetry-status-message">Sensor array uninitialized.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Card 3: Neural Fusion Results -->
+<section class="cyber-card result-section" id="resultBox" style="display:none;">
+    <div class="card-header">
+        <h2><span class="terminal-symbol">&gt;_</span> NEURAL FUSION DECODE</h2>
+        <span class="decode-success">COMPLETED</span>
+    </div>
+
+    <div class="results-grid">
+
+        <div class="result-tile" id="faceResultTile">
+            <div class="tile-label">FACIAL EMOTION CLASSIFIER</div>
+
+            <div class="emotion-value" id="faceOut">NEUTRAL</div>
+
+            <div
+                id="faceConfidence"
+                style="
+                    margin-top:10px;
+                    font-size:14px;
+                    color:#00E5FF;
+                    font-weight:600;
+                    letter-spacing:1px;
+                "
+            >
+                Confidence: 0%
+            </div>
+
+            <div class="glow-bar"></div>
+        </div>
+
+        <div class="result-tile" id="audioResultTile">
+            <div class="tile-label">SPEECH BI-LSTM PREDICTION</div>
+
+            <div class="emotion-value" id="audioOut">NEUTRAL</div>
+
+            <div
+                id="audioConfidence"
+                style="
+                    margin-top:10px;
+                    font-size:14px;
+                    color:#00E5FF;
+                    font-weight:600;
+                    letter-spacing:1px;
+                "
+            >
+                Confidence: 0%
+            </div>
+
+            <div class="glow-bar"></div>
+        </div>
+
+        <div class="result-tile final-tile" id="finalResultTile">
+            <div class="tile-label">DECISION FUSION DECISION</div>
+
+            <div
+                class="emotion-value final-emotion"
+                id="finalOut"
+            >
+                NEUTRAL
+            </div>
+
+            <div class="glow-bar"></div>
+        </div>
+
+    </div>
+</section>
+
+    </div>
+
+    <!-- Futuristic Loading Screen Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+        <div class="loader-container">
+            <div class="hud-loader">
+                <div class="hud-circle ring-1"></div>
+                <div class="hud-circle ring-2"></div>
+                <div class="hud-circle ring-3"></div>
+                <div class="hud-center-dot"></div>
+            </div>
+            <div class="loader-status">
+                <div class="loader-title">EXTRACTING FEATURE VECTORS</div>
+                <div class="loader-progress-bar">
+                    <div class="loader-progress-fill"></div>
+                </div>
+                <div class="loader-subtext" id="loaderSubtext">Executing model feed-forward logic...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Validation Message Toast -->
+    <div id="validationToast" class="cyber-toast" style="display:none;">
+        <div class="toast-indicator-line"></div>
+        <div class="toast-content-wrapper">
+            <div class="toast-icon">⚡</div>
+            <div class="toast-body">
+                <div class="toast-title">SYSTEM VALIDATION ALERT</div>
+                <div class="toast-message" id="toastMessage">Required input streams are missing.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connect JS file -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,795 @@
+/* Cyberpunk Glassmorphism Design System */
+:root {
+    --bg-dark: #060814;
+    --card-bg: rgba(12, 17, 34, 0.45);
+    --border-color: rgba(0, 242, 254, 0.15);
+    --border-hover: rgba(0, 242, 254, 0.4);
+    --text-primary: #f0f4f8;
+    --text-secondary: #8a9fc4;
+    
+    /* Neon Accents */
+    --accent-cyan: #00f2fe;
+    --accent-purple: #9d4edd;
+    --accent-blue: #0076ff;
+    --accent-green: #390099;
+    --warning-orange: #f77f00;
+    
+    /* Emotion Glow Hues */
+    --color-angry: #ff0055;
+    --color-disgust: #00f5d4;
+    --color-fear: #b5179e;
+    --color-happy: #fee440;
+    --color-sad: #00b4d8;
+    --color-surprise: #ff5400;
+    --color-neutral: #e2eafc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 40px 20px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================
+   1. Ambient Glowing Background Orbs
+   ========================================== */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.18;
+    pointer-events: none;
+    animation: orbFloat 25s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--accent-cyan);
+    top: -50px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--accent-purple);
+    bottom: -100px;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: var(--accent-blue);
+    top: 40%;
+    left: 60%;
+    animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(60px, 40px) scale(1.15);
+    }
+    100% {
+        transform: translate(-30px, -60px) scale(0.9);
+    }
+}
+
+/* ==========================================
+   2. Main Container & Layout
+   ========================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.main-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.glitch-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5), 0 0 20px rgba(0, 242, 254, 0.2);
+    position: relative;
+}
+
+.subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================
+   3. Glassmorphic Cards Style
+   ========================================== */
+.cyber-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    opacity: 0.8;
+}
+
+.cyber-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 12px;
+}
+
+.card-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.terminal-symbol {
+    color: var(--accent-cyan);
+    margin-right: 5px;
+}
+
+.status-indicator {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(0, 255, 149, 0.1);
+    color: #00ff95;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 149, 0.2);
+    letter-spacing: 1px;
+}
+
+.status-indicator.live-pulse {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.status-indicator.live-pulse.active-pulse {
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--accent-cyan);
+    border-color: rgba(0, 242, 254, 0.3);
+    animation: indicatorPulse 1.5s infinite;
+}
+
+@keyframes indicatorPulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+/* ==========================================
+   4. Form Elements & File Upload Fields
+   ========================================== */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.custom-file-label {
+    display: block;
+    cursor: pointer;
+}
+
+.file-title {
+    display: block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.drop-zone {
+    border: 2px dashed rgba(0, 242, 254, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.drop-zone:hover, .drop-zone.highlight {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 242, 254, 0.04);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+}
+
+.drop-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.3));
+}
+
+.drop-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.drop-zone input[type=file] {
+    display: none;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.file-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85%;
+}
+
+.file-name.file-selected {
+    color: var(--accent-cyan);
+    font-weight: 500;
+}
+
+.clear-file {
+    background: none;
+    border: none;
+    color: #ff4a5a;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+}
+
+.clear-file:hover {
+    color: #ff2233;
+}
+
+/* ==========================================
+   5. Cyber Buttons Style
+   ========================================== */
+.cyber-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 118, 255, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cyber-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 118, 255, 0.4), 0 0 12px rgba(157, 78, 221, 0.4);
+}
+
+.cyber-btn:active {
+    transform: scale(0.98);
+}
+
+.cyber-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.cyber-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.cyber-btn:disabled, .cyber-btn.disabled {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ==========================================
+   6. Live Video Telemetry Interface
+   ========================================== */
+.video-feed-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #000;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 30px rgba(0, 242, 254, 0.1);
+}
+
+#video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Corner HUD Brackets */
+.corner-bracket {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent-cyan);
+    pointer-events: none;
+}
+
+.top-left { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+.top-right { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+.bottom-left { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+.bottom-right { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+/* Laser Scanner Line */
+.scanner-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    box-shadow: 0 0 10px var(--accent-cyan);
+    pointer-events: none;
+    animation: scannerMotion 2.2s infinite ease-in-out;
+}
+
+@keyframes scannerMotion {
+    0% { top: 3%; }
+    50% { top: 97%; }
+    100% { top: 3%; }
+}
+
+/* Recording Pulse Indicator */
+.rec-dot {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 12px;
+    height: 12px;
+    background: #ff0055;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #ff0055;
+    animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.telemetry-status-message {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.telemetry-status-message.recording-pulse {
+    color: #ff0055;
+    font-weight: 700;
+    animation: recPulse 1.2s infinite;
+}
+
+@keyframes recPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* ==========================================
+   7. Results Decode Section
+   ========================================== */
+.result-section {
+    margin-top: 10px;
+    animation: slideUpFade 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.result-tile {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.result-tile.final-tile {
+    border-width: 1px;
+    background: rgba(0, 242, 254, 0.02);
+}
+
+.tile-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.emotion-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.emotion-value.final-emotion {
+    font-size: 2.3rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.glow-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+}
+
+/* Dynamic Emotion States Hues */
+.result-tile.emo-angry .emotion-value { color: var(--color-angry); text-shadow: 0 0 15px rgba(255, 0, 85, 0.4); }
+.result-tile.emo-angry .glow-bar { background: var(--color-angry); box-shadow: 0 -2px 10px var(--color-angry); }
+.result-tile.emo-angry { border-color: rgba(255, 0, 85, 0.25); background: rgba(255, 0, 85, 0.02); }
+
+.result-tile.emo-disgust .emotion-value { color: var(--color-disgust); text-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
+.result-tile.emo-disgust .glow-bar { background: var(--color-disgust); box-shadow: 0 -2px 10px var(--color-disgust); }
+.result-tile.emo-disgust { border-color: rgba(0, 245, 212, 0.25); background: rgba(0, 245, 212, 0.02); }
+
+.result-tile.emo-fear .emotion-value { color: var(--color-fear); text-shadow: 0 0 15px rgba(181, 23, 158, 0.4); }
+.result-tile.emo-fear .glow-bar { background: var(--color-fear); box-shadow: 0 -2px 10px var(--color-fear); }
+.result-tile.emo-fear { border-color: rgba(181, 23, 158, 0.25); background: rgba(181, 23, 158, 0.02); }
+
+.result-tile.emo-happy .emotion-value { color: var(--color-happy); text-shadow: 0 0 15px rgba(254, 228, 64, 0.4); }
+.result-tile.emo-happy .glow-bar { background: var(--color-happy); box-shadow: 0 -2px 10px var(--color-happy); }
+.result-tile.emo-happy { border-color: rgba(254, 228, 64, 0.25); background: rgba(254, 228, 64, 0.02); }
+
+.result-tile.emo-sad .emotion-value { color: var(--color-sad); text-shadow: 0 0 15px rgba(0, 180, 216, 0.4); }
+.result-tile.emo-sad .glow-bar { background: var(--color-sad); box-shadow: 0 -2px 10px var(--color-sad); }
+.result-tile.emo-sad { border-color: rgba(0, 180, 216, 0.25); background: rgba(0, 180, 216, 0.02); }
+
+.result-tile.emo-surprise .emotion-value { color: var(--color-surprise); text-shadow: 0 0 15px rgba(255, 84, 0, 0.4); }
+.result-tile.emo-surprise .glow-bar { background: var(--color-surprise); box-shadow: 0 -2px 10px var(--color-surprise); }
+.result-tile.emo-surprise { border-color: rgba(255, 84, 0, 0.25); background: rgba(255, 84, 0, 0.02); }
+
+.result-tile.emo-neutral .emotion-value { color: var(--color-neutral); text-shadow: 0 0 15px rgba(226, 234, 252, 0.4); }
+.result-tile.emo-neutral .glow-bar { background: var(--color-neutral); box-shadow: 0 -2px 10px var(--color-neutral); }
+.result-tile.emo-neutral { border-color: rgba(226, 234, 252, 0.25); background: rgba(226, 234, 252, 0.02); }
+
+/* ==========================================
+   8. Loading Overlay Style
+   ========================================== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(6, 8, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Concentric Spinning Rings Loader */
+.hud-loader {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.hud-circle {
+    position: absolute;
+    border: 2px solid transparent;
+    border-radius: 50%;
+}
+
+.ring-1 {
+    width: 100px;
+    height: 100px;
+    border-top-color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+    animation: rotateCW 1.5s linear infinite;
+}
+
+.ring-2 {
+    width: 80px;
+    height: 80px;
+    top: 10px;
+    left: 10px;
+    border-left-color: var(--accent-purple);
+    border-right-color: var(--accent-purple);
+    animation: rotateCCW 1.2s linear infinite;
+}
+
+.ring-3 {
+    width: 60px;
+    height: 60px;
+    top: 20px;
+    left: 20px;
+    border-top-color: var(--accent-blue);
+    border-bottom-color: var(--accent-blue);
+    animation: rotateCW 0.9s linear infinite;
+}
+
+.hud-center-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    top: 44px;
+    left: 44px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff;
+    animation: pulse 1s infinite alternate ease-in-out;
+}
+
+@keyframes rotateCW {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+    from { transform: scale(0.85); opacity: 0.6; }
+    to { transform: scale(1.15); opacity: 1; }
+}
+
+.loader-status {
+    text-align: center;
+    width: 300px;
+}
+
+.loader-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    animation: blink 1.5s infinite;
+}
+
+.loader-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.loader-progress-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    border-radius: 10px;
+    transform: translateX(-100%);
+    animation: fillBar 2.5s infinite ease-in-out;
+}
+
+@keyframes fillBar {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
+}
+
+.loader-subtext {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   9. Cyber Toast Validation Warning
+   ========================================== */
+.cyber-toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 360px;
+    background: rgba(14, 11, 8, 0.95);
+    border: 1px solid var(--warning-orange);
+    box-shadow: 0 10px 30px rgba(247, 127, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    z-index: 1100;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    transform: translateY(-50px) scale(0.95);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+.cyber-toast.active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toast-indicator-line {
+    width: 100%;
+    height: 3px;
+    background: var(--warning-orange);
+}
+
+.toast-content-wrapper {
+    display: flex;
+    padding: 16px 20px;
+    gap: 15px;
+    align-items: center;
+}
+
+.toast-icon {
+    font-size: 1.6rem;
+    color: var(--warning-orange);
+    animation: alertPulse 1.2s infinite;
+}
+
+@keyframes alertPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.toast-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.toast-message {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    line-height: 1.4;
+}
